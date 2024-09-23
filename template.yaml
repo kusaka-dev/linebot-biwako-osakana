@@ -25,7 +25,7 @@ Resources:
     Properties:
       Runtime: python3.9
       CodeUri: functions/CallSFN/
-      Handler: mylinebot.lambda_handler
+      Handler: callsfn.lambda_handler
       Environment:
         Variables:
           LINE_CHANNEL_ACCESS_TOKEN:
@@ -39,7 +39,7 @@ Resources:
             Path: /api_endpoint
             Method: post
     Metadata:
-      SamResourceId: EndPointFunction
+      SamResourceId: CallStepFunction
 #  FishDynamoDB:
 #    Type: AWS::Serverless::SimpleTable
 #    Properties:

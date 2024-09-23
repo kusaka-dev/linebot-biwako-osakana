@@ -68,7 +68,7 @@ Resources:
       DefinitionSubstitutions:
          LineS3Function: !GetAtt LineS3Function.Arn
       Policies:
-        - LambdaInvokePolicy:
+        LambdaInvokePolicy:
           FunctionName: !Ref LineS3Function
 #  FishDynamoDB:
 #    Type: AWS::Serverless::SimpleTable

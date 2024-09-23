@@ -38,10 +38,10 @@ jobs:
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
             --stack-name linebot-biwako-osakana \
-            --s3-bucket ${{ secrets.S3BUCKET }} \
+            --s3-bucket ${{ secrets.S3BUCKET_SAM }} \
             --capabilities CAPABILITY_IAM \
             --parameter-overrides \
               LineChannelAccessToken=${{ secrets.LINECHANNELACCESSTOKEN }} \
               LineChannelSecret=${{ secrets.LINECHANNELSECRET }} \
               StatemachineArn=${{ secrets.STATEMACHINEARN }} \
-              S3BucktName=${{ secrets.S3BUCKTNAME }}
+              S3BucktName=${{ secrets.S3BUCKET_LINE_IMAGES }}

@@ -7,6 +7,9 @@ Parameters:
   LineChannelSecret:
     Type: String
     Description: "LINE のチャンネルシークレット"
+  StatemachineArn:
+    Type: String
+    Description: "sfn arn"
 #  S3BucktName:
 #    Type: String
 #    Description: "S3バケット の名前"
@@ -32,6 +35,8 @@ Resources:
             Ref: LineChannelAccessToken
           LINE_CHANNEL_SECRET:
             Ref: LineChannelSecret
+          STATEMACHINE_ARN:
+            Ref: StatemachineArn
       Events:
         API:
           Type: Api
@@ -40,6 +45,31 @@ Resources:
             Method: post
     Metadata:
       SamResourceId: CallStepFunction
+
+  LineS3Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.9
+      CodeUri: functions/LINEImageS3/
+      Handler: lineimages3.lambda_handler
+      Environment:
+        Variables:
+          LINE_CHANNEL_ACCESS_TOKEN:
+            Ref: LineChannelAccessToken
+          LINE_CHANNEL_SECRET:
+            Ref: LineChannelSecret
+    Metadata:
+      SamResourceId: LineS3Function
+
+  S3RekognitionDBStateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      DefinitionUri: statemachine / sfn.asl.json
+      DefinitionSubstitutions:
+         LineS3Function: !GetAtt LineS3Function.Arn
+      Policies:
+        - LambdaInvokePolicy:
+          FunctionName: !Ref LineS3Function
 #  FishDynamoDB:
 #    Type: AWS::Serverless::SimpleTable
 #    Properties:

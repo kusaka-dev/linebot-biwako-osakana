@@ -1,0 +1,10 @@
+{
+    "StartAt": "LINEImageS3",
+    "States": {
+        "LINEImageS3": {
+            "Type": "Task",
+            "Resource": "${LineS3Function}",
+            "End": true
+        }
+    }
+}

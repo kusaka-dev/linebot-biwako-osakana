@@ -71,6 +71,7 @@ Resources:
         LambdaInvokePolicy:
           FunctionName: !Ref LineS3Function
 
+
 #  FishDynamoDB:
 #    Type: AWS::Serverless::SimpleTable
 #    Properties:

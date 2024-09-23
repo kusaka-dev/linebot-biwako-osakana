@@ -34,12 +34,12 @@ jobs:
       - name: Build & Deploy Cloudformation stacks
         run: |
           sam build --use-container
-          sam deploy 
-          --no-confirm-changeset
-          --no-fail-on-empty-changeset
-          --stack-name GithubActionAwsSam
-          --s3-bucket ${{ secrets.S3BUCKET }}
-          --capabilities CAPABILITY_IAM
-          --parameter-overrides
-          LineChannelAccessToken=${{ secrets.LINECHANNELACCESSTOKEN }}
-          LineChannelSecret=${{ secrets.LINECHANNELSECRET }}
+          sam deploy \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --stack-name linebot-biwako-osakana \
+            --s3-bucket ${{ secrets.S3BUCKET }} \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides \
+              LineChannelAccessToken=${{ secrets.LINECHANNELACCESSTOKEN }} \
+              LineChannelSecret=${{ secrets.LINECHANNELSECRET }}

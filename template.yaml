@@ -64,7 +64,7 @@ Resources:
   S3RekognitionDBStateMachine:
     Type: AWS::Serverless::StateMachine
     Properties:
-      DefinitionUri: statemachine / sfn.asl.json
+      DefinitionUri: statemachine/sfn.asl.json
       DefinitionSubstitutions:
          LineS3Function: !GetAtt LineS3Function.Arn
       Policies:

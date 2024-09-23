@@ -42,5 +42,5 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --parameter-overrides \
               LineChannelAccessToken=${{ secrets.LINECHANNELACCESSTOKEN }} \
-              LineChannelSecret=${{ secrets.LINECHANNELSECRET }}
+              LineChannelSecret=${{ secrets.LINECHANNELSECRET }} \
               StatemachineArn=${{ secrets.STATEMACHINEARN }}

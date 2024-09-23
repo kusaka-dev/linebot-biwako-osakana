@@ -32,6 +32,7 @@ def lambda_handler(event, context):
     print(jsonbody)
     imageid = jsonbody["events"][0]["message"]["id"]
     replytoken = jsonbody["events"][0]["replyToken"]
+    print(replytoken)
     user_id = jsonbody["events"][0]["source"]["userId"]
     type = jsonbody["events"][0]["message"]["type"]
     if type == "image":
@@ -47,6 +48,5 @@ def lambda_handler(event, context):
         # )
     # きたメッセージが画像以外の場合、ステートマシンは実行せず、「判定したい魚の写真を送ってください」と返信して終了。
     else:
-        line_bot_api.reply_message(replytoken, TextSendMessage(
-            text='判定したい魚の写真を送ってください'))
+        line_bot_api.reply_message(replytoken, TextSendMessage(text='判定したい魚の写真を送ってください'))
     return {'body': 'ok'}

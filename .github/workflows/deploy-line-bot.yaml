@@ -43,4 +43,5 @@ jobs:
             --parameter-overrides \
               LineChannelAccessToken=${{ secrets.LINECHANNELACCESSTOKEN }} \
               LineChannelSecret=${{ secrets.LINECHANNELSECRET }} \
-              StatemachineArn=${{ secrets.STATEMACHINEARN }}
+              StatemachineArn=${{ secrets.STATEMACHINEARN }} \
+              S3BucktName=${{ secrets.S3BUCKTNAME }}

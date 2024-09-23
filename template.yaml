@@ -43,6 +43,9 @@ Resources:
           Properties:
             Path: /api_endpoint
             Method: post
+      Policies:
+        - StepFunctionsExecutionPolicy:
+            StateMachineName: !GetAtt S3RekognitionDBStateMachine.Name
     Metadata:
       SamResourceId: CallStepFunction
 

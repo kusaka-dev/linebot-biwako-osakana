@@ -12,9 +12,9 @@ from linebot.models import TextSendMessage
 client = boto3.client('stepfunctions')
 
 # 環境変数を取得
-handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
-line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
-statemachine_arn = os.getenv('STATEMACHINE_ARN')
+channel_secret = os.getenv('LINE_CHANNEL_SECRET')
+line_bot_api = LineBotApi('LINE_CHANNEL_ACCESS_TOKEN')
+# statemachine_arn = os.getenv('STATEMACHINE_ARN')
 
 def lambda_handler(event, context):
     body = event["body"]

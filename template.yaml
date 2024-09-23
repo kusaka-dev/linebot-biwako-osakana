@@ -63,8 +63,8 @@ Resources:
             Ref: LineChannelSecret
       Policies:
         - S3WritePolicy:
-          BucketName: 
-            Ref: S3BucktName
+            BucketName: 
+              Ref: S3BucktName
     Metadata:
       SamResourceId: LineS3Function
 

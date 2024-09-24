@@ -5,6 +5,11 @@
         "LINEImageS3": {
             "Type": "Task",
             "Resource": "${LineS3Function}",
+            "Next": "RekognitionDB"
+        },
+        "RekognitionDB": {
+            "Type": "Task",
+            "Resource": "${RekognitionFunction}",
             "End": true
         }
     }

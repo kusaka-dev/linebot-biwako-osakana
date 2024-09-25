@@ -70,7 +70,7 @@ Resources:
     Metadata:
       SamResourceId: LineS3Function
 
-  RekognitionDB:
+  RekognitionFunction:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.9
@@ -89,7 +89,8 @@ Resources:
             BucketName: 
               Ref: S3BucktName
     Metadata:
-      SamResourceId: RekognitionDB
+      SamResourceId: RekognitionFunction
+      
 
   S3RekognitionDBStateMachine:
     Type: AWS::Serverless::StateMachine
@@ -97,12 +98,12 @@ Resources:
       DefinitionUri: statemachine/sfn.asl.json
       DefinitionSubstitutions:
          LineS3Function: !GetAtt LineS3Function.Arn
-         RekognitionDB: !GetAtt RekognitionDB.Arn
+         RekognitionFunction: !GetAtt RekognitionFunction.Arn
       Policies:
         LambdaInvokePolicy:
           FunctionName: !Ref LineS3Function
         LambdaInvokePolicy:
-          FunctionName: !Ref RekognitionDB
+          FunctionName: !Ref RekognitionFunction
   LineImageS3Bucket:
     Type : AWS::S3::Bucket
     Properties:

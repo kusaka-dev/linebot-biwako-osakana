@@ -50,7 +50,6 @@ Resources:
             StateMachineName: !GetAtt S3RekognitionDBStateMachine.Name
     Metadata:
       SamResourceId: CallStepFunction
-
   LineS3Function:
     Type: AWS::Serverless::Function
     Properties:

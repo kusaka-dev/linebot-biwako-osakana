@@ -95,9 +95,9 @@ Resources:
          RekognitionFunction: !GetAtt RekognitionFunction.Arn
       Policies:
         - LambdaInvokePolicy:
-          FunctionName: !Ref LineS3Function
+            FunctionName: !Ref LineS3Function
         - LambdaInvokePolicy:
-          FunctionName: !Ref RekognitionFunction
+            FunctionName: !Ref RekognitionFunction
 
   LineImageS3Bucket:
     Type : AWS::S3::Bucket

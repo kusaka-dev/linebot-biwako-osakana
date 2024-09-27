@@ -94,9 +94,9 @@ Resources:
          LineS3Function: !GetAtt LineS3Function.Arn
          RekognitionFunction: !GetAtt RekognitionFunction.Arn
       Policies:
-        LambdaInvokePolicy:
+        - LambdaInvokePolicy:
           FunctionName: !Ref LineS3Function
-        LambdaInvokePolicy:
+        - LambdaInvokePolicy:
           FunctionName: !Ref RekognitionFunction
 
   LineImageS3Bucket:

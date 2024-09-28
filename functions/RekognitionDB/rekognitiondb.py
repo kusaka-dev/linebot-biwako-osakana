@@ -9,6 +9,7 @@ line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 
 def lambda_handler(event, context):
     replytoken = event["replytoken"]
+    print(replytoken)
     line_bot_api.reply_message(
             replytoken,
             TextSendMessage("imagename")

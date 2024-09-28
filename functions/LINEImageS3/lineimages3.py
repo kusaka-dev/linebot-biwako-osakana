@@ -28,5 +28,6 @@ def lambda_handler(event, context):
     return {
         "bucketname": s3_bucket_name,
         "imagename": str(imageid) + ".png",
+        "replytoken": replytoken,
         "user_id": user_id
     }

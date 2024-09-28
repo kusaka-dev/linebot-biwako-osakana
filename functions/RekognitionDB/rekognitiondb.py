@@ -8,12 +8,11 @@ channel_secret = os.getenv('LINE_CHANNEL_SECRET')
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 
 def lambda_handler(event, context):
-    imageid = event["imageid"]
     replytoken = event["replytoken"]
     user_id = event["user_id"]
     line_bot_api.reply_message(
             user_id,
-            TextSendMessage(imagename)
+            TextSendMessage("imagename")
         )
     return {
         "bucketname": s3_bucket_name,

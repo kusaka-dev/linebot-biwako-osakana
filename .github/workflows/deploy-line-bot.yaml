@@ -44,4 +44,5 @@ jobs:
               LineChannelAccessToken=${{ secrets.LINECHANNELACCESSTOKEN }} \
               LineChannelSecret=${{ secrets.LINECHANNELSECRET }} \
               StatemachineArn=${{ secrets.STATEMACHINEARN }} \
-              S3BucktName=${{ secrets.S3BUCKET_LINE_IMAGES }}
+              S3BucktName=${{ secrets.S3BUCKET_LINE_IMAGES }} \
+              DynamoDBTableName=${{ secrets.DYNAMODB_TABLENAME }}

@@ -13,6 +13,9 @@ Parameters:
   S3BucktName:
    Type: String
    Description: "S3バケット の名前"
+  DynamoDBTableName:
+   Type: String
+   Description: "DynamoDBのテーブル名"
 
 #  CustomLabelProjectArn:
 #    Type: String
@@ -20,9 +23,6 @@ Parameters:
 #  VersionName:
 #    Type: String
 #    Description: "モデルのバージョン名"
-#  DynamoDBTableName:
-#    Type: String
-#    Description: "DynamoDBのテーブル名"
 
 Resources:
   CallStepFunction:
@@ -105,14 +105,15 @@ Resources:
       BucketName:
         Ref: S3BucktName
 
-#  FishDynamoDB:
-#    Type: AWS::Serverless::SimpleTable
-#    Properties:
-#      TableName:
-#        Ref: DynamoDBTableName
-#      PrimaryKey:
-#        Name: FishName
-#        Type: String
+  FishDynamoDB:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName:
+        Ref: DynamoDBTableName
+      PrimaryKey:
+        Name: FishName
+        Type: String
+        
 Outputs:
   ApiEndpointURL:
     Description: API Endpoint URL

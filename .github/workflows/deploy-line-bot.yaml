@@ -5,6 +5,7 @@ on:
     branches:
       - 'main'
 
+
 env:
   TEMPLATE_FILE: template.yaml
 

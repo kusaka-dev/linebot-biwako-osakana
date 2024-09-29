@@ -21,10 +21,10 @@ def lambda_handler(event, context):
     user_id = event["user_id"]
     image = line_bot_api.get_message_content(imageid)
     s3_client.put_object(Bucket=s3_bucket_name, Key=f'{imageid}.png', Body=image.content)
-    # line_bot_api.reply_message(
-    #         replytoken,
-    #         TextSendMessage(text='アップロードに成功しました')
-    #     )
+    line_bot_api.reply_message(
+            replytoken,
+            TextSendMessage(text='アップロードに成功しました')
+        )
     return {
         "bucketname": s3_bucket_name,
         "imagename": str(imageid) + ".png",

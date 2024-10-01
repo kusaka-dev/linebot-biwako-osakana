@@ -10,6 +10,11 @@
         "RekognitionDB": {
             "Type": "Task",
             "Resource": "${RekognitionFunction}",
+            "Next": "Reply"
+        },
+        "Reply": {
+            "Type": "Task",
+            "Resource": "${ReplyFunction}",
             "End": true
         }
     }

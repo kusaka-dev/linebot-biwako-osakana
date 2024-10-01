@@ -11,15 +11,14 @@ Parameters:
     Type: String
     Description: "sfn arn"
   S3BucktName:
-   Type: String
-   Description: "S3バケット の名前"
+    Type: String
+    Description: "S3バケット の名前"
   DynamoDBTableName:
-   Type: String
-   Description: "DynamoDBのテーブル名"
-
-#  CustomLabelProjectArn:
-#    Type: String
-#    Description: "カスタムラベルのプロジェクトネーム"
+    Type: String
+    Description: "DynamoDBのテーブル名"
+  CustomLabelProjectArn:
+    Type: String
+    Description: "カスタムラベルのプロジェクトネーム"
 #  VersionName:
 #    Type: String
 #    Description: "モデルのバージョン名"
@@ -79,12 +78,28 @@ Resources:
       Handler: rekognitiondb.lambda_handler
       Environment:
         Variables:
+          PROJECT_ARN:
+            Ref: CustomLabelProjectArn
+          TABLE_NAME:
+            Ref: DynamoDBTableName
+    Metadata:
+      SamResourceId: RekognitionFunction
+
+  ReplyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.9
+      CodeUri: functions/Reply/
+      Handler: reply.lambda_handler
+      Environment:
+        Variables:
           LINE_CHANNEL_ACCESS_TOKEN:
             Ref: LineChannelAccessToken
           LINE_CHANNEL_SECRET:
             Ref: LineChannelSecret
     Metadata:
-      SamResourceId: RekognitionFunction
+      SamResourceId: ReplyFunction
+  
       
   S3RekognitionDBStateMachine:
     Type: AWS::Serverless::StateMachine
@@ -93,11 +108,14 @@ Resources:
       DefinitionSubstitutions:
          LineS3Function: !GetAtt LineS3Function.Arn
          RekognitionFunction: !GetAtt RekognitionFunction.Arn
+         ReplyFunction: !GetAtt ReplyFunction.Arn
       Policies:
         - LambdaInvokePolicy:
             FunctionName: !Ref LineS3Function
         - LambdaInvokePolicy:
             FunctionName: !Ref RekognitionFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref ReplyFunction
 
   LineImageS3Bucket:
     Type : AWS::S3::Bucket

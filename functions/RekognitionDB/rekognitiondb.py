@@ -1,18 +1,49 @@
 import os
 import boto3
-from linebot import LineBotApi, WebhookHandler
-from linebot.models import TextSendMessage
 
 # 環境変数を取得
-channel_secret = os.getenv('LINE_CHANNEL_SECRET')
-line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
+project_arn = os.getenv('PROJECT_ARN')
+table_name = os.getenv('TABLE_NAME')
+
+rekognition = boto3.client('rekognition')
+dynamodb = boto3.client('dynamodb')
 
 def lambda_handler(event, context):
-    replytoken = event["replytoken"]
-    print(replytoken)
-    line_bot_api.push_message(event["user_id"],TextSendMessage(text=event["imagename"]))
+    response = rekognition.detect_custom_labels(
+        ProjectVersionArn=project_arn,
+        Image={
+            'S3Object': {
+                'Bucket': event["bucketname"],
+                'Name': event["imagename"],
+            }
+        },
+    )
+    user_id = event["user_id"]
+
+    if not response["CustomLabels"]:
+        message = "この写真ではうまく判定できませんでした・・・。"
+
+    else:
+        resultname = response['CustomLabels'][0]['Name']
+        resultpercent = response['CustomLabels'][0]['Confidence']
+        user_id = event["user_id"]
+
+        response = dynamodb.get_item(
+            TableName=table_name,
+            Key={
+                "FishName": {"S": resultname}
+            }
+        )
+        item = response["Item"]
+        per = round(resultpercent, 2)
+        features = item["features"]["S"]
+
+        message = '''**判定結果**
+                名前 : {0} 
+                信頼度 : {1}%
+                特徴 : {2}'''.format(resultname, str(per), futures)
+    
     return {
-        "bucketname": s3_bucket_name,
-        "imagename": str(imageid) + ".png",
-        "user_id": user_id
+        "user_id": user_id,
+        "message": message
     }

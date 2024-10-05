@@ -83,6 +83,9 @@ Resources:
           TABLE_NAME:
             Ref: DynamoDBTableName
       Policies:
+        - S3ReadPolicy:
+            BucketName: 
+              Ref: S3BucktName
         - Statement:
           - Action:
             - "rekognition:DetectCustomLabels"

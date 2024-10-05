@@ -8,6 +8,4 @@ channel_secret = os.getenv('LINE_CHANNEL_SECRET')
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 
 def lambda_handler(event, context):
-    replytoken = event["replytoken"]
-    print(replytoken)
     line_bot_api.push_message(event["user_id"],TextSendMessage(text=event["message"]))

@@ -83,7 +83,7 @@ Resources:
           TABLE_NAME:
             Ref: DynamoDBTableName
       Policies:
-        - S3ReadPolicy:
+        - S3FullAccessPolicy:
             BucketName: 
               Ref: S3BucktName
         - Statement:

@@ -82,6 +82,13 @@ Resources:
             Ref: CustomLabelProjectArn
           TABLE_NAME:
             Ref: DynamoDBTableName
+      Policies:
+        - Statement:
+          - Action:
+            - "rekognition:DetectCustomLabels"
+            Effect: "Allow"
+            Resource:
+              Ref: CustomLabelProjectArn
     Metadata:
       SamResourceId: RekognitionFunction
 

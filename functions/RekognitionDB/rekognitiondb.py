@@ -9,18 +9,12 @@ rekognition = boto3.client('rekognition')
 dynamodb = boto3.client('dynamodb')
 
 def lambda_handler(event, context):
-    bucketname = event["bucketname"]
-    print(bucketname)
-    imagename = event["imagename"]
-    print(imagename)
 
     response = rekognition.detect_custom_labels(
         ProjectVersionArn=project_arn,
         Image={'S3Object': {'Bucket': event["bucketname"],'Name': event["imagename"]}},
     )
     user_id = event["user_id"]
-
-    print(response)
 
     if not response["CustomLabels"]:
         message = "この写真ではうまく判定できませんでした・・・。"
@@ -41,7 +35,6 @@ def lambda_handler(event, context):
         features = item["Features"]["S"]
 
         message = '''**判定結果**\n名前 : {0} \n信頼度 : {1}%\n特徴 : {2}'''.format(resultname, str(per), features)
-        print(message)
     return {
         "user_id": user_id,
         "message": message

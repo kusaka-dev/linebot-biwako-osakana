@@ -29,10 +29,8 @@ def lambda_handler(event, context):
 
     now = datetime.datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
     jsonbody = json.loads(body)
-    print(jsonbody)
     imageid = jsonbody["events"][0]["message"]["id"]
     replytoken = jsonbody["events"][0]["replyToken"]
-    print(replytoken)
     user_id = jsonbody["events"][0]["source"]["userId"]
     type = jsonbody["events"][0]["message"]["type"]
     if type == "image":

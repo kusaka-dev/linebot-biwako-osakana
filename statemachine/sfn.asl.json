@@ -5,11 +5,34 @@
         "LINEImageS3": {
             "Type": "Task",
             "Resource": "${LineS3Function}",
-            "Next": "RekognitionDB"
+            "Next": "RekognitionDB",
+            "Catch":[
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "ErrorFunction",
+                    "ResultPath": null
+                }
+            ]
         },
         "RekognitionDB": {
             "Type": "Task",
             "Resource": "${RekognitionFunction}",
+            "Next": "Reply",
+            "Catch":[
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "ErrorFunction",
+                    "ResultPath": null
+                }
+            ]
+        },
+        "ErrorFunction": {
+            "Type": "Task",
+            "Resource": "${ErrorFunction}",
             "Next": "Reply"
         },
         "Reply": {

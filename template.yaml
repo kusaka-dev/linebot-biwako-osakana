@@ -49,6 +49,7 @@ Resources:
             StateMachineName: !GetAtt S3RekognitionDBStateMachine.Name
     Metadata:
       SamResourceId: CallStepFunction
+  
   LineS3Function:
     Type: AWS::Serverless::Function
     Properties:
@@ -112,7 +113,21 @@ Resources:
             Ref: LineChannelSecret
     Metadata:
       SamResourceId: ReplyFunction
-  
+
+  ErrorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.9
+      CodeUri: functions/Error/
+      Handler: error.lambda_handler
+      Environment:
+        Variables:
+          LINE_CHANNEL_ACCESS_TOKEN:
+            Ref: LineChannelAccessToken
+          LINE_CHANNEL_SECRET:
+            Ref: LineChannelSecret
+    Metadata:
+      SamResourceId: ErrorFunction
       
   S3RekognitionDBStateMachine:
     Type: AWS::Serverless::StateMachine
@@ -122,6 +137,7 @@ Resources:
          LineS3Function: !GetAtt LineS3Function.Arn
          RekognitionFunction: !GetAtt RekognitionFunction.Arn
          ReplyFunction: !GetAtt ReplyFunction.Arn
+         ErrorFunction: !GetAtt ErrorFunction.Arn
       Policies:
         - LambdaInvokePolicy:
             FunctionName: !Ref LineS3Function
@@ -129,6 +145,8 @@ Resources:
             FunctionName: !Ref RekognitionFunction
         - LambdaInvokePolicy:
             FunctionName: !Ref ReplyFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref ErrorFunction
 
   LineImageS3Bucket:
     Type : AWS::S3::Bucket

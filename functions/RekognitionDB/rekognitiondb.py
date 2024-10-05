@@ -38,7 +38,7 @@ def lambda_handler(event, context):
         )
         item = response["Item"]
         per = round(resultpercent, 2)
-        features = item["features"]["S"]
+        features = item["Features"]["S"]
 
         message = '''**判定結果**\n名前 : {0} \n信頼度 : {1}%\n特徴 : {2}'''.format(resultname, str(per), futures)
         print(message)

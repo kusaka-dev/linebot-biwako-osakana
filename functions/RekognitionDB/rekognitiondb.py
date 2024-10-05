@@ -13,15 +13,10 @@ def lambda_handler(event, context):
     print(bucketname)
     imagename = event["imagename"]
     print(imagename)
-    
+
     response = rekognition.detect_custom_labels(
         ProjectVersionArn=project_arn,
-        Image={
-            'S3Object': {
-                'Bucket': event["bucketname"],
-                'Name': event["imagename"],
-            }
-        },
+        Image={'S3Object': {'Bucket': event["bucketname"],'Name': event["imagename"]}},
     )
     user_id = event["user_id"]
 

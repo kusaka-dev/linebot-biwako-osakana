@@ -20,6 +20,8 @@ def lambda_handler(event, context):
     )
     user_id = event["user_id"]
 
+    print(response)
+
     if not response["CustomLabels"]:
         message = "この写真ではうまく判定できませんでした・・・。"
 
@@ -39,7 +41,7 @@ def lambda_handler(event, context):
         features = item["features"]["S"]
 
         message = '''**判定結果**\n名前 : {0} \n信頼度 : {1}%\n特徴 : {2}'''.format(resultname, str(per), futures)
-    
+        print(message)
     return {
         "user_id": user_id,
         "message": message
